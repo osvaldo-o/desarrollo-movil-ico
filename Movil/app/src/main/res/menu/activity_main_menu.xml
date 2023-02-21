@@ -15,6 +15,10 @@
                     android:id="@+id/nestedscrollview"
                     android:icon="@drawable/baseline_description_24"
                     android:title="@string/nestedscrollview"/>
+                <item
+                    android:id="@+id/peliculas"
+                    android:icon="@drawable/baseline_description_24"
+                    android:title="Pelicula" />
             </menu>
         </item>
     </group>

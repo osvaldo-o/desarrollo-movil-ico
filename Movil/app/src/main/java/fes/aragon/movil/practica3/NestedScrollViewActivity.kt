@@ -9,7 +9,7 @@ import fes.aragon.movil.R
 class NestedScrollViewActivity : AppCompatActivity() {
 
     private lateinit var lenguajes: Array<String?>
-    //private lateinit var colores: IntArray
+    private lateinit var colores: IntArray
     private lateinit var recyclerView: RecyclerView
     private var adapter: MaterialAdapter? = null
     private var listaTarjetas = ArrayList<Card>()
@@ -21,6 +21,7 @@ class NestedScrollViewActivity : AppCompatActivity() {
         supportActionBar?.setHomeButtonEnabled(true)
 
         lenguajes = resources.getStringArray(R.array.lenguajes)
+        colores = resources.getIntArray(R.array.colores)
         iniciarTarjetas()
         if (adapter == null){
             adapter = MaterialAdapter(this,listaTarjetas)
@@ -35,7 +36,7 @@ class NestedScrollViewActivity : AppCompatActivity() {
             val card = Card()
             card.id = i.toLong()
             card.nombre = lenguajes[i]
-            card.color_recurso = 0
+            card.color_recurso = colores[i]
             listaTarjetas.add(card)
         }
     }

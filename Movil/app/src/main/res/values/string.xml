@@ -47,6 +47,28 @@
         <item>C++</item>
         <item>Ruby</item>
     </string-array>
+    <string-array name="colores">
+        <item>@color/purple_700</item>
+        <item>@color/fondo_color</item>
+        <item>@color/teal_700</item>
+        <item>@color/white</item>
+        <item>@color/menu_color</item>
+        <item>@color/purple_700</item>
+        <item>@color/fondo_color</item>
+        <item>@color/teal_700</item>
+        <item>@color/white</item>
+        <item>@color/menu_color</item>
+        <item>@color/purple_700</item>
+        <item>@color/fondo_color</item>
+        <item>@color/teal_700</item>
+        <item>@color/white</item>
+        <item>@color/menu_color</item>
+        <item>@color/purple_700</item>
+        <item>@color/fondo_color</item>
+        <item>@color/teal_700</item>
+        <item>@color/white</item>
+        <item>@color/menu_color</item>
+    </string-array>
     <string name="xbox">Consola XBOX</string>
     <string name="datos">
         Play hundreds of high-quality PC games with friends including new day one titles and get an EA Play membership.
@@ -70,5 +92,6 @@
     <string name="serie_x">Serie X</string>
     <string name="logo_compra">logo compra</string>
     <string name="collapsingtoolbarlayout">Collapsingtoolbarlayout</string>
+    <string name="description_clon_wars">La primera serie semanal de televisión de "Lucasfilm Animation", hace una crónica de las aventuras de Anakin Skywalker, Yoda, Obi-Wan Kenobi y otros personajes populares del universo de "Star Wars" durante la violencia del "Clone Wars" mientras el grupo minoritario de caballeros Jedi lucha para restaurar la paz.</string>
 
 </resources>

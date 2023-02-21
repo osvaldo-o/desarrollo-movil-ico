@@ -11,6 +11,7 @@ import androidx.core.view.GravityCompat
 import androidx.core.view.NestedScrollingChild
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import fes.aragon.movil.peliculas.Peliculas
 import fes.aragon.movil.practica2.ConstrainActivity
 import fes.aragon.movil.practica3.NestedScrollViewActivity
 
@@ -47,6 +48,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.nestedscrollview -> {
                 startActivity(Intent(this,NestedScrollViewActivity::class.java))
+            }
+            R.id.peliculas -> {
+                startActivity(Intent(this,Peliculas::class.java))
             }
         }
         drawer.closeDrawer(GravityCompat.START)
