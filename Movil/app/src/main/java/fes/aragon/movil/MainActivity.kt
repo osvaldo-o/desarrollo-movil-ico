@@ -3,6 +3,7 @@ package fes.aragon.movil
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.CollapsibleActionView
 import android.view.LayoutInflater
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -14,6 +15,7 @@ import com.google.android.material.navigation.NavigationView
 import fes.aragon.movil.peliculas.Peliculas
 import fes.aragon.movil.practica2.ConstrainActivity
 import fes.aragon.movil.practica3.NestedScrollViewActivity
+import fes.aragon.movil.practica4.CollapsingToolbarLayout
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var drawer: DrawerLayout
@@ -51,6 +53,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.peliculas -> {
                 startActivity(Intent(this,Peliculas::class.java))
+            }
+            R.id.collapsing -> {
+                startActivity(Intent(this,CollapsingToolbarLayout::class.java))
             }
         }
         drawer.closeDrawer(GravityCompat.START)

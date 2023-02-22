@@ -11,7 +11,6 @@ class ConstrainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
     }
-
     override fun onSupportNavigateUp(): Boolean {
         super.onBackPressed()
         return true

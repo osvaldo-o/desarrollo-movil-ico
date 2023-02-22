@@ -18,7 +18,7 @@
             android:name=".practica2.ConstrainActivity"
             android:exported="false" />
         <activity
-            android:name=".practica3.NestedScrollViewActivity"
+            android:name=".practica4.CollapsingToolbarLayout"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
