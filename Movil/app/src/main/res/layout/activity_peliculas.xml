@@ -29,13 +29,13 @@
         app:srcCompat="@drawable/perfil_clon_wars" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/floatingButtonPlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/fondo_color"
         android:clickable="true"
-        android:contentDescription="play de la pelicula"
+        android:contentDescription="boton para reproducir la pelicula"
         app:layout_constraintEnd_toStartOf="@+id/imageView3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2"
@@ -64,37 +64,37 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewDescription" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton2"
+        android:id="@+id/floatingButtonComprar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/teal_200"
         android:clickable="true"
-        android:contentDescription="play de la pelicula"
-        app:layout_constraintEnd_toStartOf="@+id/floatingActionButton3"
+        android:contentDescription="boton para comprar la pelicula"
+        app:layout_constraintEnd_toStartOf="@+id/floatingButtonDetalle"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/floatingActionButton3"
+        app:layout_constraintTop_toTopOf="@+id/floatingButtonDetalle"
         app:srcCompat="@drawable/baseline_add_shopping_cart_24" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton4"
+        android:id="@+id/floatingButtonSalir"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/cancelar"
         android:clickable="true"
-        android:contentDescription="play de la pelicula"
+        android:contentDescription="boton para salir"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/floatingActionButton3"
-        app:layout_constraintTop_toTopOf="@+id/floatingActionButton3"
+        app:layout_constraintStart_toEndOf="@+id/floatingButtonDetalle"
+        app:layout_constraintTop_toTopOf="@+id/floatingButtonDetalle"
         app:srcCompat="@drawable/baseline_arrow_back_24" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton3"
+        android:id="@+id/floatingButtonDetalle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:backgroundTint="@color/purple_200"
         android:clickable="true"
-        android:contentDescription="play de la pelicula"
+        android:contentDescription="boton para mas detalle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider_dos"
