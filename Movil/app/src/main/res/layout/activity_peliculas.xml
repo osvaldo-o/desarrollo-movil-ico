@@ -64,31 +64,32 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewDescription" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingButtonComprar"
+        android:id="@+id/floatingButtonAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/teal_200"
         android:clickable="true"
         android:contentDescription="boton para comprar la pelicula"
-        app:layout_constraintEnd_toStartOf="@+id/floatingButtonDetalle"
+        app:layout_constraintEnd_toStartOf="@+id/floatingButtonDetail"
+        app:layout_constraintHorizontal_bias="0.475"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/floatingButtonDetalle"
+        app:layout_constraintTop_toTopOf="@+id/floatingButtonDetail"
         app:srcCompat="@drawable/baseline_add_shopping_cart_24" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingButtonSalir"
+        android:id="@+id/floatingButtonGoOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/cancelar"
         android:clickable="true"
         android:contentDescription="boton para salir"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/floatingButtonDetalle"
-        app:layout_constraintTop_toTopOf="@+id/floatingButtonDetalle"
+        app:layout_constraintStart_toEndOf="@+id/floatingButtonDetail"
+        app:layout_constraintTop_toTopOf="@+id/floatingButtonDetail"
         app:srcCompat="@drawable/baseline_arrow_back_24" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingButtonDetalle"
+        android:id="@+id/floatingButtonDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"

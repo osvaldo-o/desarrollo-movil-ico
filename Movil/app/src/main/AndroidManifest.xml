@@ -12,6 +12,9 @@
         android:theme="@style/Theme.Movil"
         tools:targetApi="31">
         <activity
+            android:name=".peliculas.Video"
+            android:exported="false" />
+        <activity
             android:name=".peliculas.Peliculas"
             android:exported="false" />
         <activity
@@ -19,6 +22,9 @@
             android:exported="false" />
         <activity
             android:name=".practica4.CollapsingToolbarLayout"
+            android:exported="false" />
+        <activity
+            android:name=".practica3.NestedScrollViewActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
