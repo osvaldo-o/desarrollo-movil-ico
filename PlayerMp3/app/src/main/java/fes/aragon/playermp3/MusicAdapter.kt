@@ -36,7 +36,7 @@ class MusicAdapter(private val musicList: List<Modelo>, private val itemClickLis
     private inner class MusicViewHolder(val binding: MusicItemBinding, context: Context): BaseViewHolder<Modelo>(binding.root){
         override fun bind(item: Modelo) {
             binding.titleSound.text = item.nameFile
-            binding.imageSound.setImageResource(item.nameImge)
+            binding.imageSound.setImageResource(item.nameImage)
         }
     }
 }

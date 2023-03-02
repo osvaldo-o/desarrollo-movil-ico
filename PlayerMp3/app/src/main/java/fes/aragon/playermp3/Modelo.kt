@@ -1,3 +1,6 @@
 package fes.aragon.playermp3
 
-data class Modelo(var nameFile: String, var nameImge: Int, var path: String) : java.io.Serializable
+import android.net.Uri
+import java.net.URI
+
+data class Modelo(var nameFile: String, var nameImage: Int, var path: String, var extension: String) : java.io.Serializable

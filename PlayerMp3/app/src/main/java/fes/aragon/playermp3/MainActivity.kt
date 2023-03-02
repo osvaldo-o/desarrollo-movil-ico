@@ -5,10 +5,13 @@ import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
+import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import fes.aragon.playermp3.databinding.ActivityMainBinding
 import fes.aragon.playermp3.databinding.MusicItemBinding
 import java.io.File
+import kotlin.math.log
 
 class MainActivity : AppCompatActivity(), MusicAdapter.OnMusicClickListener {
 
@@ -16,7 +19,6 @@ class MainActivity : AppCompatActivity(), MusicAdapter.OnMusicClickListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: MusicAdapter
-    private var mediaPlayer: MediaPlayer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,9 +32,17 @@ class MainActivity : AppCompatActivity(), MusicAdapter.OnMusicClickListener {
     }
 
     override fun onMusicClick(music: Modelo) {
-        //playerCurrent(music)
-        val intent = Intent(this,DetailMusic::class.java)
-        intent.putExtra("music",music)
+        var intent: Intent? = null
+        when(music.extension){
+            "mp3" -> {
+                intent = Intent(this,DetailMusic::class.java)
+
+            }
+            "mp4" -> {
+                intent = Intent(this,DetailVideo::class.java)
+            }
+        }
+        intent?.putExtra("music",music)
         startActivity(intent)
     }
 
@@ -43,25 +53,9 @@ class MainActivity : AppCompatActivity(), MusicAdapter.OnMusicClickListener {
             listMusic = ArrayList()
             ff.listFiles()!!.forEach {
                 if (it.isFile){
-                    listMusic.add(Modelo(it.name,R.drawable.image_sound,it.path))
+                    val nameImage = if (it.extension.equals("mp3")) R.drawable.image_sound else R.drawable.logo_video
+                    listMusic.add(Modelo(it.name,nameImage,it.path,it.extension))
                 }
-            }
-        }
-    }
-
-    private fun playerCurrent(music: Modelo){
-        if (mediaPlayer == null){
-            mediaPlayer = MediaPlayer().apply {
-                setDataSource(music.path)
-                prepare()
-                start()
-            }
-        }else{
-            mediaPlayer!!.release()
-            mediaPlayer = MediaPlayer().apply {
-                setDataSource(music.path)
-                prepare()
-                start()
             }
         }
     }

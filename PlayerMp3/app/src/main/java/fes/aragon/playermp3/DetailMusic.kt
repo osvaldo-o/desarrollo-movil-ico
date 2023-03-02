@@ -18,7 +18,7 @@ class DetailMusic : AppCompatActivity() {
         intent.extras?.let {
             music = it.getSerializable("music") as Modelo
             binding.titleSound.text = music.nameFile
-            binding.imageView.setImageResource(music.nameImge)
+            binding.imageView.setImageResource(music.nameImage)
             playerCurrent(music)
         }
 
@@ -35,7 +35,7 @@ class DetailMusic : AppCompatActivity() {
         }
 
         binding.stop.setOnClickListener {
-            if (mediaPlayer == null){
+            if (mediaPlayer != null){
                 mediaPlayer!!.release()
                 mediaPlayer = null
             }
