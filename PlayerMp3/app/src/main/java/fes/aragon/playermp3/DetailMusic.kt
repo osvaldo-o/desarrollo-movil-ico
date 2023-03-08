@@ -35,10 +35,7 @@ class DetailMusic : AppCompatActivity() {
         }
 
         binding.stop.setOnClickListener {
-            if (mediaPlayer != null){
-                mediaPlayer!!.release()
-                mediaPlayer = null
-            }
+            stopMusic()
         }
 
         binding.pause.setOnClickListener {
@@ -67,7 +64,14 @@ class DetailMusic : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        mediaPlayer!!.release()
+        stopMusic()
         super.onDestroy()
+    }
+
+    private fun stopMusic(){
+        if (mediaPlayer != null){
+            mediaPlayer!!.release()
+            mediaPlayer = null
+        }
     }
 }
