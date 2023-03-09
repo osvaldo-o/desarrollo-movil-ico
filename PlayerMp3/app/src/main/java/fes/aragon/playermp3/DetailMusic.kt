@@ -15,12 +15,18 @@ class DetailMusic : AppCompatActivity() {
         setContentView(R.layout.activity_detail_music)
         binding = ActivityDetailMusicBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        intent.extras?.let {
+
+        music = intent.getParcelableExtra("music")!!
+        binding.titleSound.text = music.nameFile
+        binding.imageView.setImageResource(music.nameImage)
+        playerCurrent(music)
+
+        /*intent.extras?.let {
             music = it.getSerializable("music") as Modelo
             binding.titleSound.text = music.nameFile
             binding.imageView.setImageResource(music.nameImage)
             playerCurrent(music)
-        }
+        }*/
 
         binding.play.setOnClickListener {
             if (mediaPlayer == null){

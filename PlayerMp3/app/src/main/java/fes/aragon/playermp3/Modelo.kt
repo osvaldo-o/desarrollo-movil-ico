@@ -1,6 +1,9 @@
 package fes.aragon.playermp3
 
-import android.net.Uri
-import java.net.URI
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
-data class Modelo(var nameFile: String, var nameImage: Int, var path: String, var extension: String) : java.io.Serializable
+
+@Parcelize
+data class Modelo(var nameFile: String, var nameImage: Int, var path: String, var extension: String) : Parcelable{
+}

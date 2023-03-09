@@ -17,10 +17,13 @@ class DetailVideo : AppCompatActivity() {
         val controller = MediaController(this)
         binding.surface.setMediaController(controller)
         controller.setAnchorView(binding.surface)
-        intent.extras?.let {
+        val model: Modelo = intent.getParcelableExtra("music")!!
+        binding.surface.setVideoPath(model.path)
+        binding.surface.start()
+        /*intent.extras?.let {
             val model = it.getSerializable("music") as Modelo
             binding.surface.setVideoPath(model.path)
             binding.surface.start()
-        }
+        }*/
     }
 }
