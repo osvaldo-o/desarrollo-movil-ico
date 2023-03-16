@@ -11,6 +11,7 @@ import fes.aragon.usuarioslista.databinding.ActivityMainBinding
 import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.io.File
+import java.io.FileReader
 import java.io.FileWriter
 import java.io.InputStreamReader
 import java.text.FieldPosition
@@ -44,19 +45,25 @@ class MainActivity : AppCompatActivity(), OnClickListener, DialogInterface.OnDis
         usuarios.clear()
         var us: Usuario
         var data: List<String>
-        val file = InputStreamReader(openFileInput("usuarios.txt"))
-        val bufferedReader = BufferedReader(file)
-        bufferedReader.useLines {
-            it.forEach {
-                data = it.split(",")
-                us = Usuario(data.get(0).toInt(),data.get(1),data.get(2))
-                usuarios.add(us)
+        val rutaLeer = File(this.filesDir.path.toString(),"usuarios.txt")
+        if (rutaLeer.exists()){
+            val file = InputStreamReader(openFileInput("usuarios.txt"))
+            BufferedReader(file).useLines {
+                it.forEach {
+                    data = it.split(",")
+                    us = Usuario(data.get(0).toInt(),data.get(1),data.get(2))
+                    usuarios.add(us)
+                }
             }
         }
         return usuarios
     }
     override fun onClick(usuario: Usuario,position: Int) {
-        usuarios.removeAt(position)
+        Toast.makeText(this,usuario.name,Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDelete(position: Int) {
+        val user = usuarios.removeAt(position)
         File(this.filesDir.path.toString(),"usuarios.txt").delete()
         val rutaLeer = File(this.filesDir.path.toString(),"usuarios.txt")
         val fileWriter = FileWriter(rutaLeer,true)
@@ -64,8 +71,8 @@ class MainActivity : AppCompatActivity(), OnClickListener, DialogInterface.OnDis
             fileWriter.write("${it.id},${it.name},${it.url}\n")
         }
         fileWriter.close()
-        Toast.makeText(this, "${usuario.name} eliminado", Toast.LENGTH_SHORT).show()
         iniciar()
+        Toast.makeText(this,"${user.name} deleted",Toast.LENGTH_SHORT).show()
     }
 
     override fun onDismiss(dialog: DialogInterface?) {

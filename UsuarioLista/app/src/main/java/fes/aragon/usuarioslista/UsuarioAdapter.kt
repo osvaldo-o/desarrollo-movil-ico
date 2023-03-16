@@ -15,11 +15,18 @@ class UsuarioAdapter(private val usuario: List<Usuario>, private val oyente: OnC
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
         var binding = UserItemBinding.bind(view)
 
-        fun oyente(usuario: Usuario, position: Int){
+        fun onClick(usuario: Usuario, position: Int){
             binding.root.setOnClickListener {
                 oyente.onClick(usuario,position)
             }
         }
+
+        fun onClickDelete(position: Int){
+            binding.buttonDelete.setOnClickListener {
+                oyente.onDelete(position)
+            }
+        }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -35,7 +42,8 @@ class UsuarioAdapter(private val usuario: List<Usuario>, private val oyente: OnC
         with(holder) {
             binding.nombreCliente.text = usuario.name
             binding.numCliente.text = usuario.id.toString()
-            oyente(usuario,position)
+            onClick(usuario,position)
+            onClickDelete(position)
             Glide.with(context)
                 .load(usuario.url)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
