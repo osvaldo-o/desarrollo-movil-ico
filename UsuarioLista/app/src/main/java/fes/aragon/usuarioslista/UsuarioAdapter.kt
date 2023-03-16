@@ -15,9 +15,9 @@ class UsuarioAdapter(private val usuario: List<Usuario>, private val oyente: OnC
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
         var binding = UserItemBinding.bind(view)
 
-        fun oyente(usuario: Usuario){
+        fun oyente(usuario: Usuario, position: Int){
             binding.root.setOnClickListener {
-                oyente.onClick(usuario)
+                oyente.onClick(usuario,position)
             }
         }
     }
@@ -35,7 +35,7 @@ class UsuarioAdapter(private val usuario: List<Usuario>, private val oyente: OnC
         with(holder) {
             binding.nombreCliente.text = usuario.name
             binding.numCliente.text = usuario.id.toString()
-            oyente(usuario)
+            oyente(usuario,position)
             Glide.with(context)
                 .load(usuario.url)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)

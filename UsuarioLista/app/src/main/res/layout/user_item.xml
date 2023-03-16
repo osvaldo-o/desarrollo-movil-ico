@@ -24,11 +24,11 @@
         android:id="@+id/num_cliente"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="1"
         android:textAppearance="?attr/textAppearanceCaption"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        tools:text="1" />
 
     <TextView
         android:id="@+id/nombre_cliente"
@@ -45,8 +45,8 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="@color/color_divide"
-        app:layout_constraintStart_toStartOf="@id/nombre_cliente"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintStart_toStartOf="@id/nombre_cliente" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
