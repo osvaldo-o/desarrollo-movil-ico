@@ -3,19 +3,13 @@ package fes.aragon.usuarioslista
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.load.data.InputStreamRewinder
 import fes.aragon.usuarioslista.databinding.ActivityMainBinding
 import java.io.BufferedReader
-import java.io.BufferedWriter
 import java.io.File
-import java.io.FileReader
 import java.io.FileWriter
 import java.io.InputStreamReader
-import java.text.FieldPosition
-import kotlin.math.log
 
 class MainActivity : AppCompatActivity(), OnClickListener, DialogInterface.OnDismissListener {
 
@@ -27,7 +21,7 @@ class MainActivity : AppCompatActivity(), OnClickListener, DialogInterface.OnDis
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        iniciar()
+        starComponents()
         binding.agregar.setOnClickListener {
             var fragmentAddUsuario = fragment_add_usuario()
             fragmentAddUsuario.isCancelable = false
@@ -35,13 +29,13 @@ class MainActivity : AppCompatActivity(), OnClickListener, DialogInterface.OnDis
         }
     }
 
-    private fun iniciar () {
-        usuarioAdapter = UsuarioAdapter(generarDatos(),this)
+    private fun starComponents() {
+        usuarioAdapter = UsuarioAdapter(generateData(),this)
         recyclerView = binding.recyclerview
         recyclerView.adapter = usuarioAdapter
     }
 
-    private fun generarDatos(): MutableList<Usuario>{
+    private fun generateData(): MutableList<Usuario>{
         usuarios.clear()
         var us: Usuario
         var data: List<String>
@@ -64,6 +58,18 @@ class MainActivity : AppCompatActivity(), OnClickListener, DialogInterface.OnDis
 
     override fun onDelete(position: Int) {
         val user = usuarios.removeAt(position)
+        overwriteFile()
+        starComponents()
+        Toast.makeText(this,"${user.name} deleted",Toast.LENGTH_SHORT).show()
+    }
+
+    private fun updateUser(user: Usuario,position: Int){
+        usuarios[position] = Usuario(user.id,user.name,user.url)
+        overwriteFile()
+        starComponents()
+    }
+
+    private fun overwriteFile(){
         File(this.filesDir.path.toString(),"usuarios.txt").delete()
         val rutaLeer = File(this.filesDir.path.toString(),"usuarios.txt")
         val fileWriter = FileWriter(rutaLeer,true)
@@ -71,12 +77,10 @@ class MainActivity : AppCompatActivity(), OnClickListener, DialogInterface.OnDis
             fileWriter.write("${it.id},${it.name},${it.url}\n")
         }
         fileWriter.close()
-        iniciar()
-        Toast.makeText(this,"${user.name} deleted",Toast.LENGTH_SHORT).show()
     }
 
     override fun onDismiss(dialog: DialogInterface?) {
         Toast.makeText(this,"Update",Toast.LENGTH_SHORT).show()
-        iniciar()
+        starComponents()
     }
 }
