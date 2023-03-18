@@ -9,15 +9,15 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import fes.aragon.usuarioslista.databinding.UserItemBinding
 
-class UsuarioAdapter(private val usuario: List<Usuario>, private val oyente: OnClickListener) : RecyclerView.Adapter<UsuarioAdapter.ViewHolder>() {
+class UserAdapter(private val user: List<User>, private val oyente: OnClickListener) : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
     private lateinit var context: Context
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
         var binding = UserItemBinding.bind(view)
 
-        fun onClick(usuario: Usuario, position: Int){
+        fun onClick(user: User, position: Int){
             binding.root.setOnClickListener {
-                oyente.onClick(usuario,position)
+                oyente.onClick(user,position)
             }
         }
 
@@ -29,10 +29,10 @@ class UsuarioAdapter(private val usuario: List<Usuario>, private val oyente: OnC
         return ViewHolder(vista)
     }
 
-    override fun getItemCount(): Int = usuario.size
+    override fun getItemCount(): Int = user.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val usuario = usuario.get(position)
+        val usuario = user.get(position)
         with(holder) {
             binding.nombreCliente.text = usuario.name
             binding.numCliente.text = usuario.id.toString()
