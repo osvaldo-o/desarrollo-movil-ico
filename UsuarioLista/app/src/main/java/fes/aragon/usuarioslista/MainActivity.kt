@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity(), OnClickListener, DialogInterface.OnDis
     private lateinit var usuarioAdapter: UsuarioAdapter
     private lateinit var recyclerView: RecyclerView
     private val usuarios = mutableListOf<Usuario>()
+    private var userSelect = -1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -26,6 +27,16 @@ class MainActivity : AppCompatActivity(), OnClickListener, DialogInterface.OnDis
             var fragmentAddUsuario = fragment_add_usuario()
             fragmentAddUsuario.isCancelable = false
             fragmentAddUsuario.show(supportFragmentManager,"Datos de entrada")
+        }
+        binding.delete.setOnClickListener {
+            if (userSelect >= 0){
+                val fragmentDeleteUsuario = DeleteUser(usuarios,userSelect)
+                fragmentDeleteUsuario.isCancelable = false
+                fragmentDeleteUsuario.show(supportFragmentManager,"Datos entrada")
+            }else{
+                Toast.makeText(this,"Selecciona un usuario",Toast.LENGTH_SHORT).show()
+            }
+
         }
     }
 
@@ -53,10 +64,10 @@ class MainActivity : AppCompatActivity(), OnClickListener, DialogInterface.OnDis
         return usuarios
     }
     override fun onClick(usuario: Usuario,position: Int) {
-        Toast.makeText(this,usuario.name,Toast.LENGTH_SHORT).show()
+        userSelect = position
     }
 
-    override fun onDelete(position: Int) {
+    private fun onDelete(position: Int) {
         val user = usuarios.removeAt(position)
         overwriteFile()
         starComponents()
@@ -80,7 +91,7 @@ class MainActivity : AppCompatActivity(), OnClickListener, DialogInterface.OnDis
     }
 
     override fun onDismiss(dialog: DialogInterface?) {
-        Toast.makeText(this,"Update",Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this,"Update",Toast.LENGTH_SHORT).show()
         starComponents()
     }
 }

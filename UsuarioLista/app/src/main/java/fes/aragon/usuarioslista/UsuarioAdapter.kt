@@ -21,12 +21,6 @@ class UsuarioAdapter(private val usuario: List<Usuario>, private val oyente: OnC
             }
         }
 
-        fun onClickDelete(position: Int){
-            binding.buttonDelete.setOnClickListener {
-                oyente.onDelete(position)
-            }
-        }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -43,7 +37,6 @@ class UsuarioAdapter(private val usuario: List<Usuario>, private val oyente: OnC
             binding.nombreCliente.text = usuario.name
             binding.numCliente.text = usuario.id.toString()
             onClick(usuario,position)
-            onClickDelete(position)
             Glide.with(context)
                 .load(usuario.url)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)

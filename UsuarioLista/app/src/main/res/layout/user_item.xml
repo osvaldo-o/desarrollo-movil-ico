@@ -25,7 +25,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?attr/textAppearanceCaption"
-        app:layout_constraintStart_toStartOf="@+id/nombre_cliente"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="1" />
 
@@ -45,16 +46,7 @@
         android:layout_height="1dp"
         android:background="@color/color_divide"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/nombre_cliente"
-        app:layout_constraintEnd_toStartOf="@id/buttonDelete"/>
-
-    <ImageView
-        android:id="@+id/buttonDelete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/baseline_delete_24" />
+        app:layout_constraintStart_toStartOf="@id/nombre_cliente" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
