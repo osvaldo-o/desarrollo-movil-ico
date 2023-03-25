@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.MainActivity">
+    tools:context=".view.ui.MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listView1"
         android:layout_width="409dp"
         android:layout_height="0dp"
-        android:padding="10dp"
+        android:padding="14dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,7 +28,7 @@
         android:id="@+id/listView2"
         android:layout_width="409dp"
         android:layout_height="0dp"
-        android:padding="10dp"
+        android:padding="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

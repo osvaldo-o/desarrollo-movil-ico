@@ -1,4 +1,4 @@
-package fes.aragon.app.adapter
+package fes.aragon.app.view.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import fes.aragon.app.R
 import fes.aragon.app.databinding.ItemBinding
 import fes.aragon.app.model.DataModel
 
-class DogAdapter(private val list: List<DataModel>,private val itemClickListener: OnDogClickListener) : RecyclerView.Adapter<DogAdapter.ViewHolder>(){
+class TopAdapter(private val list: List<DataModel>, private val itemClickListener: OnDogClickListener) : RecyclerView.Adapter<TopAdapter.ViewHolder>() {
     private lateinit var context: Context
 
     interface OnDogClickListener {
@@ -50,5 +50,4 @@ class DogAdapter(private val list: List<DataModel>,private val itemClickListener
                 .into(binding.image)
         }
     }
-
 }
