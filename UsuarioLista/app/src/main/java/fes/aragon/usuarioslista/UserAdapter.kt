@@ -9,9 +9,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import fes.aragon.usuarioslista.databinding.UserItemBinding
 
-class UserAdapter(private val user: List<User>, private val oyente: OnClickListener) : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
+class UserAdapter(private var user: MutableList<User>, private val oyente: OnClickListener) : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
     private lateinit var context: Context
-
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
         var binding = UserItemBinding.bind(view)
 
@@ -22,15 +21,12 @@ class UserAdapter(private val user: List<User>, private val oyente: OnClickListe
         }
 
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context = parent.context
         val vista = LayoutInflater.from(context).inflate(R.layout.user_item,parent,false)
         return ViewHolder(vista)
     }
-
     override fun getItemCount(): Int = user.size
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val usuario = user.get(position)
         with(holder) {
@@ -44,5 +40,11 @@ class UserAdapter(private val user: List<User>, private val oyente: OnClickListe
                 .circleCrop()
                 .into(binding.foto)
         }
+    }
+
+    fun listUser() : MutableList<User> = user
+
+    fun setListUser(list : MutableList<User>){
+        this.user = list
     }
 }

@@ -10,6 +10,7 @@ import java.io.BufferedReader
 import java.io.File
 import java.io.FileWriter
 import java.io.InputStreamReader
+import java.util.concurrent.LinkedBlockingQueue
 
 class MainActivity : AppCompatActivity(), OnClickListener, FragmentDeleteUser.NoticeDialogListener, FragmentAddUser.NoticeDialogListener {
 
@@ -42,13 +43,14 @@ class MainActivity : AppCompatActivity(), OnClickListener, FragmentDeleteUser.No
     }
 
     private fun starComponents() {
-        userAdapter = UserAdapter(generateData(),this)
+        generateData()
+        userAdapter = UserAdapter(mutableListOf(),this)
         recyclerView = binding.recyclerview
         recyclerView.adapter = userAdapter
     }
 
-    private fun generateData(): MutableList<User>{
-        users.clear()
+    private fun generateData() /*: MutableList<User>*/ {
+        /*users.clear()
         var us: User
         var data: List<String>
         val rutaLeer = File(this.filesDir.path.toString(),"usuarios.txt")
@@ -62,7 +64,13 @@ class MainActivity : AppCompatActivity(), OnClickListener, FragmentDeleteUser.No
                 }
             }
         }
-        return users
+        return users*/
+        val queue = LinkedBlockingQueue<MutableList<User>>()
+        Thread {
+            val user = UserApplication.database.userDao()
+                .getAllUser()
+            queue.add(user)
+        }.start()
     }
     override fun onClick(user: User, position: Int) {
         userSelect = position
@@ -92,23 +100,8 @@ class MainActivity : AppCompatActivity(), OnClickListener, FragmentDeleteUser.No
     }
 
     override fun onDialogStoreClick(dialog: DialogFragment, user: User) {
-        val rutaLeer = File(this.filesDir.path.toString(),"usuarios.txt")
-        try {
-            FileWriter(rutaLeer,true).use {
-                val datos = StringBuffer()
-                datos.append(user.id)
-                    .append(",")
-                    .append(user.name)
-                    .append(",")
-                    .append(user.url)
-                    .append("\n")
-                it.write(datos.toString())
-                it.close()
-                dialog.dismiss()
-            }
-        }catch (e:java.lang.Exception){
-            Toast.makeText(this,"Error al leer el archivo",Toast.LENGTH_SHORT).show()
-        }
-        starComponents()
+        Thread {
+            UserApplication.database.userDao().addUser(user)
+        }.start()
     }
 }

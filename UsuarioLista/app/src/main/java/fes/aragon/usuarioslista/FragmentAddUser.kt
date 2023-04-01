@@ -39,7 +39,7 @@ class FragmentAddUser() : DialogFragment() {
         }
         buttonWrite = view.findViewById(R.id.almacenar)
         buttonWrite.setOnClickListener {
-            listener.onDialogStoreClick(this,User(id.text.toString().toInt(),name.text.toString(),url.text.toString()))
+            listener.onDialogStoreClick(this,User(name = name.text.toString(),url = url.text.toString()))
         }
         return view
     }
