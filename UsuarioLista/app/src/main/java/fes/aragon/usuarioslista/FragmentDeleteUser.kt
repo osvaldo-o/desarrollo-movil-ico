@@ -7,22 +7,22 @@ import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 
-class FragmentDeleteUser(private val listUsers: MutableList<User>, private val position: Int) : DialogFragment() {
+class FragmentDeleteUser(private val user: User) : DialogFragment() {
 
     internal lateinit var listener: NoticeDialogListener
 
     interface NoticeDialogListener {
-        fun onDialogDeletedClick(dialog: DialogFragment,position: Int)
+        fun onDialogDeletedClick(dialog: DialogFragment, user: User)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
 
-            builder.setMessage("Delete user  ${listUsers[position].name}?")
+            builder.setMessage("Delete user ${user.name}?")
                 .setPositiveButton("Eliminated",
                     DialogInterface.OnClickListener { dialog, id ->
-                        listener.onDialogDeletedClick(this,position)
+                        listener.onDialogDeletedClick(this, user)
                     })
                 .setNegativeButton("Cancel",
                     DialogInterface.OnClickListener { dialog, id ->

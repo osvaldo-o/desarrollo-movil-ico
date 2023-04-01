@@ -9,14 +9,14 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import fes.aragon.usuarioslista.databinding.UserItemBinding
 
-class UserAdapter(private var user: MutableList<User>, private val oyente: OnClickListener) : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
+class UserAdapter(private var user: MutableList<User>, private val listener: OnClickListener) : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
     private lateinit var context: Context
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
         var binding = UserItemBinding.bind(view)
 
         fun onClick(user: User, position: Int){
             binding.root.setOnClickListener {
-                oyente.onClick(user,position)
+                listener.onClick(user,position)
             }
         }
 
