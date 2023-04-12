@@ -38,12 +38,17 @@ class FragmentUpdateUser(private val user: User) : DialogFragment() {
         name = view.findViewById(R.id.name)
         email = view.findViewById(R.id.email)
         age = view.findViewById(R.id.age)
+        masculino = view.findViewById(R.id.masculino)
+        femenino = view.findViewById(R.id.femenino)
 
         name.text = user.name
         email.text = user.email
         age.text = user.age.toString()
-
-        if (user.sex == "Masculino")
+        if (user.sex == "Masculino"){
+            masculino.isChecked = true
+        }else{
+            femenino.isChecked = true
+        }
 
         buttonCancel = view.findViewById(R.id.cancelar)
         buttonCancel.setOnClickListener {
@@ -53,7 +58,13 @@ class FragmentUpdateUser(private val user: User) : DialogFragment() {
         buttonUpdate = view.findViewById(R.id.almacenar)
         buttonUpdate.text = "UPDATE"
         buttonUpdate.setOnClickListener {
-            listener.onDialogUpdate(this,User(user.id,name.text.toString(),email.text.toString(),age.text.toString().toInt(),sex.text.toString()))
+            var sexo: String
+            if (masculino.isChecked()){
+                sexo = "Masculino"
+            }else{
+                sexo = "Femenino"
+            }
+            listener.onDialogUpdate(this,User(user.id,name.text.toString(),email.text.toString(),age.text.toString().toInt(),sexo))
         }
 
         return view

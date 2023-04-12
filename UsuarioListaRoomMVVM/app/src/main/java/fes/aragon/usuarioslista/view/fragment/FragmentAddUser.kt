@@ -40,12 +40,6 @@ class FragmentAddUser() : DialogFragment() {
         email = view.findViewById(R.id.email)
         age = view.findViewById(R.id.age)
         masculino = view.findViewById(R.id.masculino)
-        val sexo: String
-        if (masculino.isChecked()){
-            sexo = "Masculino"
-        }else{
-            sexo = "Femenino"
-        }
 
         buttonCancel = view.findViewById(R.id.cancelar)
         buttonCancel.setOnClickListener {
@@ -53,6 +47,12 @@ class FragmentAddUser() : DialogFragment() {
         }
         buttonWrite = view.findViewById(R.id.almacenar)
         buttonWrite.setOnClickListener {
+            var sexo: String
+            if (masculino.isChecked()){
+                sexo = "Masculino"
+            }else{
+                sexo = "Femenino"
+            }
             listener.onDialogStoreClick(this,
                 User(name = name.text.toString(), email = email.text.toString(), age = age.text.toString().toInt(), sex = sexo)
             )
