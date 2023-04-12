@@ -23,28 +23,60 @@
         app:layout_constraintVertical_bias="0.0">
 
         <EditText
-            android:id="@+id/nombre"
+            android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:autofillHints="Name"
             android:ems="10"
-            android:hint="Name"
+            android:hint="Nombre"
             android:inputType="textPersonName"
             android:textColor="@color/white"
             android:textColorHighlight="#FAF6F6"
             android:textColorHint="#F3F2F2"/>
 
         <EditText
-            android:id="@+id/url"
+            android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:autofillHints="url"
             android:ems="10"
-            android:hint="URL"
+            android:hint="Correo"
             android:inputType="textPersonName"
             android:textColor="@color/white"
             android:textColorHighlight="#faf6f6"
             android:textColorHint="#f3f2f2"/>
+
+        <EditText
+            android:id="@+id/age"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:autofillHints="Edad"
+            android:ems="10"
+            android:hint="Edad"
+            android:inputType="number"
+            android:textColor="@color/white"
+            android:textColorHighlight="#FAF6F6"
+            android:textColorHint="#F3F2F2"/>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/masculino"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Masculino"
+                android:textColor="@color/white"/>
+
+            <RadioButton
+                android:id="@+id/femenino"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Femenino"
+                android:textColor="@color/white"/>
+
+        </RadioGroup>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,7 +90,7 @@
                 android:layout_height="48dp"
                 android:layout_marginHorizontal="10dp"
                 android:background="@color/color_divide"
-                android:text="store"
+                android:text="save"
                 android:textColor="@color/white"/>
 
             <Button

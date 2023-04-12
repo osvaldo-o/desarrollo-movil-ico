@@ -1,9 +1,0 @@
-1,Tha Mandalorian,https://i.etsystatic.com/23512542/r/il/b41b53/3062879552/il_794xN.3062879552_fdfa.jpg
-2,Rex,https://i.etsystatic.com/19766875/r/il/76b1d5/4210595550/il_1080xN.4210595550_3lsv.jpg
-3,Obi wan,https://imagenes.20minutos.es/files/image_990_v3/uploads/imagenes/2022/03/09/obi-wan-kenobi.jpeg
-4,Anakin Skywalker,https://i0.wp.com/eneagramadelapersonalidad.com/wp-content/uploads/2013/06/anakin-skywalker.jpg?resize=500%2C360&ssl=1
-5,Ahsoka Tano,https://gcdn.lanetaneta.com/wp-content/uploads/2020/03/Los-fan%C3%A1ticos-de-las-Guerras-Clon-est%C3%A1n-encantados-de-ver.jpeg
-6,Darth Maul,https://i.pinimg.com/236x/aa/7b/b5/aa7bb52491424bbebaf328a3b5821c6a--darth-maul-vader.jpg
-7,Boba Fett,https://i.pinimg.com/736x/12/7e/0f/127e0f9395410b07e8f8073fe457b800.jpg
-8,Bo-Katan,https://i.pinimg.com/550x/df/70/1b/df701bd08fdde438097634fbb76e611e.jpg
-9,Sabine,https://q9f6i8x5.stackpathcdn.com/wp-content/uploads/2016/09/star_wars_rebels_sabine.jpg

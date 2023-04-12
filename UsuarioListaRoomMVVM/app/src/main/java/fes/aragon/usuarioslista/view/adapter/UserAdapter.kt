@@ -34,13 +34,10 @@ class UserAdapter(private var user: MutableList<User>, private val listener: OnC
         with(holder) {
             binding.nombreCliente.text = usuario.name
             binding.numCliente.text = usuario.id.toString()
+            binding.email.text = usuario.email
+            binding.age.text = "Edad: ${usuario.age}"
+            binding.sex.text = "Sexo: ${usuario.sex}"
             onClick(usuario,position)
-            Glide.with(context)
-                .load(usuario.url)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
-                .circleCrop()
-                .into(binding.foto)
         }
     }
 
