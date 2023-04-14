@@ -2,9 +2,9 @@ package fes.aragon.http
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
+import androidx.appcompat.widget.SearchView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.gson.Gson
 import fes.aragon.http.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: DogAdapter
@@ -42,6 +42,31 @@ class MainActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             val call = getRedrofit().create(ServiceAPI::class.java).getBreedbyDogs("$type/images")
             val pug: ModeloDog? = call.body()
+            runOnUiThread {
+                if (call.isSuccessful) {
+                    val images: List<String> = pug?.images?: emptyList()
+                    dogImages.clear()
+                    dogImages.addAll(images)
+                    adapter.notifyDataSetChanged()
+                }else{
+                    msgError()
+                }
+            }
         }
     }
+
+    private fun msgError() {
+        Toast.makeText(this,"Error en conexion",Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        if (!query.isNullOrEmpty()){
+            search(query.lowercase())
+        }
+        return true
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean = true
+
+
 }
