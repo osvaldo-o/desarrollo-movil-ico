@@ -1,4 +1,4 @@
-package fes.aragon.appexamenhttp
+package fes.aragon.examen
 
 import org.junit.Test
 

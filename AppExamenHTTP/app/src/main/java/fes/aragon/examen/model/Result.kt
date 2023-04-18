@@ -1,4 +1,4 @@
-package fes.aragon.appexamenhttp.model
+package fes.aragon.examen.model
 
 data class Result(
     val email: String,

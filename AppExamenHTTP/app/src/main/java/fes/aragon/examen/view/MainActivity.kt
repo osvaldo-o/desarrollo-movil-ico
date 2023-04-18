@@ -1,11 +1,11 @@
-package fes.aragon.appexamenhttp.view
+package fes.aragon.examen.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import fes.aragon.appexamenhttp.databinding.ActivityMainBinding
-import fes.aragon.appexamenhttp.model.Result
-import fes.aragon.appexamenhttp.viewmodel.DataViewModel
+import fes.aragon.examen.databinding.ActivityMainBinding
+import fes.aragon.examen.model.Result
+import fes.aragon.examen.viewmodel.DataViewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
             adapter.notifyDataSetChanged()
         })
         binding.agregarPersona.setOnClickListener {
-            dataViewModel.agregarUsuario()
+            dataViewModel.agregarPersona()
         }
     }
 

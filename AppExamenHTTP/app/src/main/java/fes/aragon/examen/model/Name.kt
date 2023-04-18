@@ -1,4 +1,4 @@
-package fes.aragon.appexamenhttp.model
+package fes.aragon.examen.model
 
 data class Name(
     val first: String,

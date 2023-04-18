@@ -1,10 +1,10 @@
-package fes.aragon.appexamenhttp.view
+package fes.aragon.examen.view
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import fes.aragon.appexamenhttp.databinding.ItemBinding
-import fes.aragon.appexamenhttp.model.Result
+import fes.aragon.examen.databinding.ItemBinding
+import fes.aragon.examen.model.Result
 
 class PersonaViewHolder (view: View) : RecyclerView.ViewHolder(view){
     private val binding = ItemBinding.bind(view)

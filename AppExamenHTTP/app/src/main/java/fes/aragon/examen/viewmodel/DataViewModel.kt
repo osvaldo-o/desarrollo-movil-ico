@@ -1,13 +1,13 @@
-package fes.aragon.appexamenhttp.viewmodel
+package fes.aragon.examen.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import fes.aragon.appexamenhttp.ServiceApi
+import fes.aragon.examen.ServiceApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import fes.aragon.appexamenhttp.model.Result
-import fes.aragon.appexamenhttp.model.Persona
+import fes.aragon.examen.model.Result
+import fes.aragon.examen.model.Persona
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -15,7 +15,7 @@ class DataViewModel : ViewModel() {
     private var i: Int = 1
     val listaUsuarios = MutableLiveData<List<Result>>()
 
-    fun agregarUsuario () {
+    fun agregarPersona () {
         CoroutineScope(Dispatchers.IO).launch {
             val call = getRetrofit().create(ServiceApi::class.java).getPersonas("?page=3&results=1&seed=$i")
             val body: Persona? = call.body()

@@ -11,10 +11,10 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppExamenHTTP"
+        android:theme="@style/Theme.Examen"
         tools:targetApi="31">
         <activity
-            android:name=".view.MainActivity"
+            android:name="fes.aragon.examen.view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
