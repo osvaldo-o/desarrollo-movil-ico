@@ -1,34 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="150dp">
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+    android:layout_height="80dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="4dp"
+    android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/image"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:src="@mipmap/ic_launcher"/>
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/imagen"/>
 
         <LinearLayout
-            android:layout_width="260dp"
-            android:layout_height="150dp"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginLeft="10dp"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="2dp">
 
             <TextView
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Name: The Mandalorian"
-                android:layout_marginBottom="4dp"/>
+                android:layout_marginBottom="4dp"
+                android:text="Nombre: Mr Janique" />
+
+            <TextView
+                android:id="@+id/last"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="Apellido: Costa" />
+
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="Email: janique.costa@example.com" />
 
         </LinearLayout>
 
     </LinearLayout>
-
-</androidx.cardview.widget.CardView>

@@ -1,4 +1,4 @@
-package fes.aragon.appexamenhttp
+package fes.aragon.appexamenhttp.view.adapters
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
