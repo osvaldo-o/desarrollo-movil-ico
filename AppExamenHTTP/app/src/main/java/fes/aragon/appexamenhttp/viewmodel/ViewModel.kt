@@ -13,7 +13,7 @@ class ViewModel : ViewModel() {
 
     fun getUser (seed: Int) {
         viewModelScope.launch {
-            val call = RetrofitClient.webService.getUser(seed = seed)
+            val call = RetrofitClient.webService.getUser(seed = "os$seed")
             val body: User? = call.body()
             if (call.isSuccessful){
                 user.postValue(body?.results?.get(0))

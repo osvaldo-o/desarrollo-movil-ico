@@ -10,7 +10,7 @@ import retrofit2.http.Url
 
 interface ServiceApi {
     @GET("/api")
-    suspend fun getUser(@Query("page") page: Int = 2,@Query("results") results: Int = 1,@Query("seed") seed: Int) : Response<User>
+    suspend fun getUser(@Query("page") page: Int = 3,@Query("results") results: Int = 1,@Query("seed") seed: String) : Response<User>
 }
 
 object RetrofitClient {

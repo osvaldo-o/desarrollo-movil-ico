@@ -3,7 +3,6 @@ package fes.aragon.appexamenhttp.view
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
 import fes.aragon.appexamenhttp.view.adapters.RecyclerViewAdapter
 import fes.aragon.appexamenhttp.databinding.ActivityMainBinding
 import fes.aragon.appexamenhttp.model.Result
@@ -24,10 +23,12 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.adapter = adapter
         dataViewModel.user.observe(this,{
             users.add(it)
+            binding.buttonAdd.isClickable = true
             adapter.notifyDataSetChanged()
         })
         binding.buttonAdd.setOnClickListener {
             dataViewModel.getUser(users.size)
+            binding.buttonAdd.isClickable = false
         }
     }
 
