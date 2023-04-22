@@ -6,11 +6,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
-import retrofit2.http.Url
 
 interface ServiceApi {
     @GET("/api")
-    suspend fun getUser(@Query("page") page: Int = 3,@Query("results") results: Int = 1,@Query("seed") seed: String) : Response<User>
+    suspend fun getUser(@Query("page") page: Int = 3,@Query("results") results: Int = 1,@Query("seed") seed: String) : Response<UserJSON>
 }
 
 object RetrofitClient {
