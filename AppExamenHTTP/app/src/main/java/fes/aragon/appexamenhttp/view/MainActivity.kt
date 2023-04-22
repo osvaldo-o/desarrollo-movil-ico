@@ -7,18 +7,21 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.fragment.app.DialogFragment
 import fes.aragon.appexamenhttp.R
 import fes.aragon.appexamenhttp.view.adapters.RecyclerViewAdapter
 import fes.aragon.appexamenhttp.databinding.ActivityMainBinding
 import fes.aragon.appexamenhttp.model.User
+import fes.aragon.appexamenhttp.view.fragments.DeleteFragment
+import fes.aragon.appexamenhttp.view.fragments.UpdateFragment
 import fes.aragon.appexamenhttp.viewmodel.ViewModel
 
-class MainActivity : AppCompatActivity(), RecyclerViewAdapter.OnUserClickListener {
+class MainActivity : AppCompatActivity(), RecyclerViewAdapter.OnUserClickListener, UpdateFragment.NoticeDialogListener, DeleteFragment.NoticeDialogListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: RecyclerViewAdapter
     private val users = ArrayList<User>()
-    private var userSelect: User? = null
+    private var userSelect: Int = -1
     private val viewModel: ViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,17 +46,20 @@ class MainActivity : AppCompatActivity(), RecyclerViewAdapter.OnUserClickListene
         }
 
         binding.buttonUpdate.setOnClickListener {
-            if (userSelect != null){
-                viewModel.updateUser(userSelect!!)
+            if (userSelect != -1){
+                val fragmentUpdate = UpdateFragment(users[userSelect])
+                fragmentUpdate.isCancelable = false
+                fragmentUpdate.show(supportFragmentManager,"FragmentUpdate")
             }else{
                 msgNotUserSelect()
             }
         }
 
         binding.buttonDelete.setOnClickListener {
-            if (userSelect != null){
-                viewModel.deleteUser(userSelect!!)
-                users.remove(userSelect)
+            if (userSelect != -1){
+                val fragmentDelete = DeleteFragment(users[userSelect])
+                fragmentDelete.isCancelable = false
+                fragmentDelete.show(supportFragmentManager,"FragementDelete")
             }else{
                 msgNotUserSelect()
             }
@@ -75,7 +81,24 @@ class MainActivity : AppCompatActivity(), RecyclerViewAdapter.OnUserClickListene
     private fun msgErrorInternet() = Toast.makeText(this,R.string.msg_error,Toast.LENGTH_SHORT).show()
     private fun msgNotUserSelect() = Toast.makeText(this,R.string.msg_not_select,Toast.LENGTH_SHORT).show()
 
-    override fun onUserClick(user: User) {
-        userSelect = user
+    override fun onUserClick(position: Int) {
+        userSelect = position
+    }
+
+    override fun onDialogUpdate(dialog: UpdateFragment, user: User) {
+        viewModel.updateUser(user)
+        users.remove(users[userSelect])
+        users.add(userSelect,user)
+        adapter.notifyDataSetChanged()
+        userSelect = -1
+        dialog.dismiss()
+    }
+
+    override fun onDialogDeletedClick(dialog: DialogFragment, user: User) {
+        viewModel.deleteUser(users[userSelect])
+        users.remove(users[userSelect])
+        adapter.notifyDataSetChanged()
+        userSelect =  -1
+        dialog.dismiss()
     }
 }
