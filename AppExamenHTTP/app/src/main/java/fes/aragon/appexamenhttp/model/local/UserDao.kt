@@ -7,7 +7,7 @@ interface UserDao {
     @Query(value = "SELECT * FROM user")
     suspend fun getAllUser() : MutableList<UserEntity>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert()
     suspend fun addUser(user: UserEntity)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)

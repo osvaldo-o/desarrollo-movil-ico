@@ -1,31 +1,38 @@
 package fes.aragon.appexamenhttp.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.room.Room
 import fes.aragon.appexamenhttp.model.*
 import fes.aragon.appexamenhttp.model.local.UserApplication
+import fes.aragon.appexamenhttp.model.local.UserEntity
 import fes.aragon.appexamenhttp.model.local.toUser
 import kotlinx.coroutines.launch
 
 class ViewModel() : ViewModel() {
     private val db = UserApplication.database.userDao()
-    val user = MutableLiveData<User>()
+    val users = MutableLiveData<List<User>>()
     fun getUser (seed: Int)  {
         viewModelScope.launch {
             val call = RetrofitClient.webService.getUser(seed = "os$seed")
             val body: UserJSON? = call.body()
             if (call.isSuccessful){
-                user.postValue(body?.results?.get(0)?.toUser())
+                val list = mutableListOf<User>()
+                val user = body?.results?.get(0)!!.toUser()
+                list.add(user)
+                users.postValue(list)
+                db.addUser(UserEntity(name = user.name, last = user.last, email = user.email, image = user.image))
             }
         }
     }
 
     fun getAllUser() {
         viewModelScope.launch {
-            db.getAllUser().forEach {
-                user.postValue(it.toUser())
-            }
+            users.postValue(db.getAllUser().map {
+                it.toUser()
+            })
         }
     }
 }

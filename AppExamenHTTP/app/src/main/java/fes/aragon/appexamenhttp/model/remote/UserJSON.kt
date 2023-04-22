@@ -1,5 +1,7 @@
 package fes.aragon.appexamenhttp.model
 
+import fes.aragon.appexamenhttp.model.local.UserEntity
+
 data class UserJSON(val results: List<Result>)
 data class Result(val email: String, val name: Name, val picture: Picture)
 data class Picture(val large: String)
