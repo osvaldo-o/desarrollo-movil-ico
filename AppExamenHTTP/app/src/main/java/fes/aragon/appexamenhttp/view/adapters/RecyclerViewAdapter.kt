@@ -9,11 +9,14 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import fes.aragon.appexamenhttp.databinding.ItemUserBinding
 import fes.aragon.appexamenhttp.model.User
 
-class RecyclerViewAdapter (val list: List<User>) : RecyclerView.Adapter<BaseViewHolder<*>>() {
+class RecyclerViewAdapter (private val list: List<User>, private val itemClickListener : OnUserClickListener) : RecyclerView.Adapter<BaseViewHolder<*>>() {
+
+    interface OnUserClickListener {
+        fun onUserClick(user: User)
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
         val itemBinding = ItemUserBinding.inflate(LayoutInflater.from(parent.context))
-        val holder = ViewHolder(itemBinding,parent.context)
-        return holder
+        return ViewHolder(itemBinding, parent.context)
     }
 
     override fun getItemCount(): Int = list.size
@@ -35,6 +38,13 @@ class RecyclerViewAdapter (val list: List<User>) : RecyclerView.Adapter<BaseView
                 .centerCrop()
                 .circleCrop()
                 .into(binding.photo)
+            onClick(item)
+        }
+
+        fun onClick(user: User){
+            binding.root.setOnClickListener{
+                itemClickListener.onUserClick(user)
+            }
         }
     }
 }

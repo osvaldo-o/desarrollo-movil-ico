@@ -27,12 +27,16 @@ class ViewModel() : ViewModel() {
             }
         }
     }
-
     fun getAllUser() {
         viewModelScope.launch {
             users.postValue(db.getAllUser().map {
                 it.toUser()
             })
+        }
+    }
+    fun updateUser(user: User) {
+        viewModelScope.launch {
+            db.updateUser(user.toUserEntity())
         }
     }
 }

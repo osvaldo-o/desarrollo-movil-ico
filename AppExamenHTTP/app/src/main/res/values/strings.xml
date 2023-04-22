@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AppExamenHTTP</string>
+    <string name="msg_error">No hay conexión a internet</string>
+    <string name="msg_not_select">Selecciona un usuario</string>
 </resources>
