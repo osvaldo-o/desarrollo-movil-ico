@@ -49,6 +49,15 @@ class MainActivity : AppCompatActivity(), RecyclerViewAdapter.OnUserClickListene
                 msgNotUserSelect()
             }
         }
+
+        binding.buttonDelete.setOnClickListener {
+            if (userSelect != null){
+                viewModel.deleteUser(userSelect!!)
+                users.remove(userSelect)
+            }else{
+                msgNotUserSelect()
+            }
+        }
     }
 
     private fun initRecyclerView(){

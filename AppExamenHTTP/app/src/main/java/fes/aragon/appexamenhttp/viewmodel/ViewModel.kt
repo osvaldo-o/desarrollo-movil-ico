@@ -39,4 +39,10 @@ class ViewModel() : ViewModel() {
             db.updateUser(user.toUserEntity())
         }
     }
+
+    fun deleteUser(user: User){
+        viewModelScope.launch {
+            db.deleteUser(user.toUserEntity())
+        }
+    }
 }
