@@ -1,10 +1,8 @@
 package fes.aragon.appexamenhttp.viewmodel
 
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.Room
 import fes.aragon.appexamenhttp.model.*
 import fes.aragon.appexamenhttp.model.local.UserApplication
 import fes.aragon.appexamenhttp.model.local.UserEntity
