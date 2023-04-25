@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "234334445229",
+    "project_id": "oauth-20596",
+    "storage_bucket": "oauth-20596.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:234334445229:android:dce482e552baa88a72b024",
+        "android_client_info": {
+          "package_name": "fes.aragon.oauth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "234334445229-r73ms19s407v4f58drjcerv8gbrao7ga.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHXVf1DWnqH8o1kJlzvkSyrH65InDaJa4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "234334445229-r73ms19s407v4f58drjcerv8gbrao7ga.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
