@@ -37,28 +37,33 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
         login()
-        sesiones()
+        sessions()
     }
 
-    private fun sesiones() {
-        val preferencias = getSharedPreferences(getString(R.string.file_preferencia), Context.MODE_PRIVATE)
-        var email: String? = preferencias.getString("email", null)
-        var provedor: String? = preferencias.getString("provedor", null)
+    private fun sessions() {
+        val preferences =
+            getSharedPreferences(getString(R.string.file_preferencia), Context.MODE_PRIVATE)
+        var email: String? = preferences.getString("email", null)
+        var provedor: String? = preferences.getString("provedor", null)
         if (email != null && provedor != null) {
-            opciones(email, TipoProvedor.valueOf(provedor))
+            options(email, TipoProvedor.valueOf(provedor))
         }
     }
 
     private fun login() {
-        val username = binding.username.text.toString()
-        val password = binding.password.text.toString()
+
         // Create User with Email and Password
         binding.updateUser.setOnClickListener {
-            if (!binding.username.text.toString().isEmpty() && !binding.password.text.toString().isEmpty()) {
-                FirebaseAuth.getInstance().createUserWithEmailAndPassword(binding.username.text.toString(), binding.password.text.toString()).addOnCompleteListener {
+            if (!binding.username.text.toString().isEmpty() && !binding.password.text.toString()
+                    .isEmpty()
+            ) {
+                FirebaseAuth.getInstance().createUserWithEmailAndPassword(
+                    binding.username.text.toString(),
+                    binding.password.text.toString()
+                ).addOnCompleteListener {
                     if (it.isComplete) {
                         try {
-                            opciones(it.result?.user?.email ?: "", TipoProvedor.CORREO)
+                            options(it.result?.user?.email ?: "", TipoProvedor.CORREO)
                         } catch (e: Exception) {
                             alert()
                         }
@@ -68,16 +73,18 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        //establecer enlace
+
+        // Sign in with Email and Password
         binding.loginbtn.setOnClickListener {
             if (!binding.username.text.toString().isEmpty() && !binding.password.text.toString()
                     .isEmpty()
             ) {
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(
-                    binding.username.text.toString(), binding.password.text.toString()
+                    binding.username.text.toString(),
+                    binding.password.text.toString()
                 ).addOnCompleteListener {
                     if (it.isSuccessful) {
-                        opciones(it.result?.user?.email ?: "", TipoProvedor.CORREO)
+                        options(it.result?.user?.email ?: "", TipoProvedor.CORREO)
                     } else {
                         alert()
                     }
@@ -85,20 +92,19 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Google
-        iniciarActividad()
+        // Sign in Google
+        initActivity()
         binding.google.setOnClickListener {
             val conf = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("234334445229-ch9857g6cnt0a2n4s1o3hul1hp4m2o0d.apps.googleusercontent.com")
                 .requestEmail().build()
-            val clienteGoogle = GoogleSignIn.getClient(this, conf)
-            clienteGoogle.signOut()
-            val signIn: Intent = clienteGoogle.signInIntent
-            activityResultLauncher.launch(signIn)
+            val clientGoogle = GoogleSignIn.getClient(this, conf)
+            clientGoogle.signOut()
+            activityResultLauncher.launch(clientGoogle.signInIntent)
         }
 
 
-        // Facebook
+        // Sign in Facebook
         FirebaseAuth.getInstance().signOut()
         LoginManager.getInstance().logOut()
         binding.facebook.setReadPermissions(
@@ -110,28 +116,24 @@ class MainActivity : AppCompatActivity() {
         binding.facebook.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(result: LoginResult) {
                 Log.e("TAG", "login")
-                val request =
-                    GraphRequest.newMeRequest(result.accessToken) { _ /*object tipo Stirng*/, _/*response*/ ->
-                        val token = result.accessToken
-                        val credenciales = FacebookAuthProvider.getCredential(token.token)
-                        FirebaseAuth.getInstance().signInWithCredential(credenciales)
-                            .addOnCompleteListener {
-                                if (it.isSuccessful) {
-                                    Toast.makeText(
-                                        binding.signin.context,
-                                        "Sign in successful",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                    opciones(it.result?.user?.email ?: "", TipoProvedor.FACEBOOK)
-                                } else {
-                                    alert()
-                                }
+                val request = GraphRequest.newMeRequest(result.accessToken) { _, _ ->
+                    val credential = FacebookAuthProvider.getCredential(result.accessToken.token)
+                    FirebaseAuth.getInstance().signInWithCredential(credential)
+                        .addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                Toast.makeText(
+                                    binding.signin.context,
+                                    "Sign in successful",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                options(it.result?.user?.email ?: "", TipoProvedor.FACEBOOK)
+                            } else {
+                                alert()
                             }
-                    }
+                        }
+                }
                 val parameters = Bundle()
-                parameters.putString(
-                    "fields", "id,name,email,gender,birthday"
-                )
+                parameters.putString("fields", "id,name,email,gender,birthday")
                 request.parameters = parameters
                 request.executeAsync()
             }
@@ -145,18 +147,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun alert() {
-        val bulder = AlertDialog.Builder(this)
-        bulder.setTitle("Mensaje")
-        bulder.setMessage("Se produjo un error, contacte al provesor")
-        bulder.setPositiveButton("Aceptar", null)
-        val dialog: AlertDialog = bulder.create()
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Mensaje")
+        builder.setMessage("Se produjo un error, contacte al provesor")
+        builder.setPositiveButton("Aceptar", null)
+        val dialog: AlertDialog = builder.create()
         dialog.show()
     }
 
-    private fun opciones(email: String, provesor: TipoProvedor) {
+    private fun options(email: String, provider: TipoProvedor) {
         var pasos: Intent = Intent(this, OpcionesActivity::class.java).apply {
             putExtra("email", email)
-            putExtra("provedor", provesor.name)
+            putExtra("provedor", provider.name)
         }
         startActivity(pasos)
     }
@@ -166,27 +168,28 @@ class MainActivity : AppCompatActivity() {
         binding.layoutAcceso.visibility = View.VISIBLE
     }
 
-    private fun iniciarActividad() {
-        activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+    private fun initActivity() {
+        activityResultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
                     val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
                     try {
                         val account = task.getResult(ApiException::class.java)
                         Toast.makeText(this, "Sign in successful", Toast.LENGTH_SHORT).show()
                         if (account != null) {
-                            val credenciales =
-                                GoogleAuthProvider.getCredential(account.idToken, null)
-                            FirebaseAuth.getInstance().signInWithCredential(credenciales)
+                            val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+                            FirebaseAuth.getInstance().signInWithCredential(credential)
                                 .addOnCompleteListener {
                                     if (it.isSuccessful) {
-                                        opciones(account.email ?: "", TipoProvedor.GOOGLE)
+                                        options(account.email ?: "", TipoProvedor.GOOGLE)
                                     } else {
                                         alert()
                                     }
                                 }
                         }
                     } catch (e: ApiException) {
-                        Toast.makeText(this, "Sign in failed: " + e.statusCode, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Sign in failed: " + e.statusCode, Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
             }

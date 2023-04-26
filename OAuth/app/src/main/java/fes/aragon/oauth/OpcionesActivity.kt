@@ -21,6 +21,7 @@ enum class TipoProvedor {
     GOOGLE,
     FACEBOOK
 }
+
 class OpcionesActivity : AppCompatActivity() {
     private lateinit var binding: ActivityOpcionesBinding
     private lateinit var googleSignInOption: GoogleSignInOptions
@@ -33,55 +34,61 @@ class OpcionesActivity : AppCompatActivity() {
         var bundle: Bundle? = intent.extras
         var email: String? = bundle?.getString("email")
         var provedor: String? = bundle?.getString("provedor")
-        inicio(email ?: "", provedor ?: "")
-        //GUARDAR DATOS SESION
-        val preferencias =
+        init(email ?: "", provedor ?: "")
+
+        // Save Data Session
+        val preferences =
             getSharedPreferences(getString(R.string.file_preferencia), Context.MODE_PRIVATE).edit()
-        preferencias.putString("email", email)
-        preferencias.putString("provedor", provedor)
-        preferencias.apply()
+        preferences.putString("email", email)
+        preferences.putString("provedor", provedor)
+        preferences.apply()
     }
-    private fun inicio(email: String, provedor: String) {
+
+    private fun init(email: String, provedor: String) {
+
         binding.mail.text = email
         binding.provedor.text = provedor
         binding.closeSesion.setOnClickListener {
-            val preferencias = getSharedPreferences(
+            val preferences = getSharedPreferences(
                 getString(R.string.file_preferencia),
                 Context.MODE_PRIVATE
             ).edit()
-            preferencias.clear()
-            preferencias.apply()
+            preferences.clear()
+            preferences.apply()
             FirebaseAuth.getInstance().signOut()
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
-        //google
+
+
+        // Google
         if (provedor == TipoProvedor.GOOGLE.name) {
             googleSignInOption =
-                GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestEmail().build()
+                GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail()
+                    .build()
             googleSignInClient = GoogleSignIn.getClient(this, googleSignInOption)
             val data = GoogleSignIn.getLastSignedInAccount(this)
             if (data != null) {
                 Picasso.get().load(data.photoUrl).into(binding.img)
-            }else if (provedor == TipoProvedor.FACEBOOK.name) {
-                val accessToken = AccessToken.getCurrentAccessToken()
-                Toast.makeText(this, "FACEBOOK", Toast.LENGTH_SHORT).show()
-                if (accessToken != null) {
-                    val request: GraphRequest =
-                        GraphRequest.newMeRequest(accessToken, GraphRequest.GraphJSONObjectCallback(
-                            { obj: JSONObject, response: GraphResponse ->
-                                val correo = obj.getString("email")
-                                binding.mail.text = correo
-                                val url = obj.getJSONObject("picture").getJSONObject("data")
-                                    .getString("url")
-                                Picasso.get().load(url).into(binding.img)
-                            } as (JSONObject?, GraphResponse?) -> Unit))
-                    val paramters = Bundle()
-                    paramters.putString("fields", "id,name,link,email,picture.type(large)")
-                    request.parameters = paramters
-                    request.executeAsync()
-                }
+            }
+        // Facebook
+        } else if (provedor == TipoProvedor.FACEBOOK.name) {
+            val accessToken = AccessToken.getCurrentAccessToken()
+            Toast.makeText(this, "FACEBOOK", Toast.LENGTH_SHORT).show()
+            if (accessToken != null) {
+                val request: GraphRequest = GraphRequest.newMeRequest(
+                    accessToken,
+                    GraphRequest.GraphJSONObjectCallback({ obj: JSONObject, response: GraphResponse ->
+                        val email = obj.getString("email")
+                        binding.mail.text = email
+                        val url = obj.getJSONObject("picture").getJSONObject("data")
+                            .getString("url")
+                        Picasso.get().load(url).into(binding.img)
+                    } as (JSONObject?, GraphResponse?) -> Unit))
+                val parameters = Bundle()
+                parameters.putString("fields", "id,name,link,email,picture.type(large)")
+                request.parameters = parameters
+                request.executeAsync()
             }
         }
     }
