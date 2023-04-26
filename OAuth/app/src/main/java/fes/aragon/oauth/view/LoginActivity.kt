@@ -1,4 +1,4 @@
-package fes.aragon.oauth
+package fes.aragon.oauth.view
 
 import android.app.Activity
 import android.content.Context
@@ -23,17 +23,19 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import fes.aragon.oauth.databinding.ActivityMainBinding
+import fes.aragon.oauth.R
+import fes.aragon.oauth.TipoProvedor
+import fes.aragon.oauth.databinding.ActivityLoginBinding
 
-class MainActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityLoginBinding
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private var callbackManager = CallbackManager.Factory.create()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.hide()
         login()
@@ -156,11 +158,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun options(email: String, provider: TipoProvedor) {
-        var pasos: Intent = Intent(this, OpcionesActivity::class.java).apply {
-            putExtra("email", email)
-            putExtra("provedor", provider.name)
+        try {
+            var pasos: Intent = Intent(this, MainActivity::class.java).apply {
+                putExtra("email", email)
+                putExtra("provedor", provider.name)
+            }
+            startActivity(pasos)
+        } catch (e: Exception){
+            e.stackTrace
         }
-        startActivity(pasos)
+
     }
 
     override fun onStart() {

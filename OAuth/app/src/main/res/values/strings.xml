@@ -10,9 +10,12 @@
     <string name="cerrar_sesi_n">Cerrar Sesión</string>
     <string name="file_preferencia">dgtic.unam.autentifiacion.PREFERENCE_FILE_KEY</string>
     <string name="title_activity_opciones">OpcionesActivity</string>
+    <string name="title_activity_main">MainActivity</string>
 
     <string name="facebook_app_id">791509958975347</string>
     <string name="fb_login_protocol_scheme">fb791509958975347</string>
     <string name="facebook_client_token">fa5c3fe67e3687f7c080ac7d30ca0c22</string>
 
+    <string name="msg_error">No hay conexión a internet</string>
+    <string name="msg_not_select">Selecciona un usuario</string>
 </resources>

@@ -14,6 +14,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.squareup.picasso.Picasso
 import fes.aragon.oauth.databinding.ActivityOpcionesBinding
+import fes.aragon.oauth.view.LoginActivity
 import org.json.JSONObject
 
 enum class TipoProvedor {
@@ -37,8 +38,7 @@ class OpcionesActivity : AppCompatActivity() {
         init(email ?: "", provedor ?: "")
 
         // Save Data Session
-        val preferences =
-            getSharedPreferences(getString(R.string.file_preferencia), Context.MODE_PRIVATE).edit()
+        val preferences = getSharedPreferences(getString(R.string.file_preferencia), Context.MODE_PRIVATE).edit()
         preferences.putString("email", email)
         preferences.putString("provedor", provedor)
         preferences.apply()
@@ -56,7 +56,7 @@ class OpcionesActivity : AppCompatActivity() {
             preferences.clear()
             preferences.apply()
             FirebaseAuth.getInstance().signOut()
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
 
