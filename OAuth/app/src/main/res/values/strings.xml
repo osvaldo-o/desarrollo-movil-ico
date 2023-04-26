@@ -11,7 +11,8 @@
     <string name="file_preferencia">dgtic.unam.autentifiacion.PREFERENCE_FILE_KEY</string>
     <string name="title_activity_opciones">OpcionesActivity</string>
 
-    <string name="facebook_app_id">1336042410287355</string>
-    <string name="facebook_client_token">70cb70c7e60edb169e22300bf546b3bb</string>
+    <string name="facebook_app_id">791509958975347</string>
+    <string name="fb_login_protocol_scheme">fb791509958975347</string>
+    <string name="facebook_client_token">fa5c3fe67e3687f7c080ac7d30ca0c22</string>
 
 </resources>
