@@ -24,6 +24,7 @@ import fes.aragon.oauth.viewmodel.ViewModel
 import fes.aragon.oauth.R
 import fes.aragon.oauth.TipoProvedor
 import fes.aragon.oauth.databinding.ActivityMainBinding
+import kotlinx.coroutines.delay
 import org.json.JSONObject
 
 enum class TipoProvedor {
@@ -50,9 +51,23 @@ class MainActivity : AppCompatActivity(), RecyclerViewAdapter.OnUserClickListene
         initRecyclerView()
 
         viewModel.users.observe(this) {
+            users.clear()
             users.addAll(it)
             binding.buttonAdd.isClickable = true
             adapter.notifyDataSetChanged()
+        }
+
+        viewModel.userUpdate.observe(this) {
+            users.remove(users[it.first])
+            users.add(it.first,it.second)
+            adapter.notifyDataSetChanged()
+            userSelect = -1
+        }
+
+        viewModel.userDelete.observe(this) {
+            users.remove(it)
+            adapter.notifyDataSetChanged()
+            userSelect =  -1
         }
 
         binding.buttonAdd.setOnClickListener {
@@ -66,7 +81,7 @@ class MainActivity : AppCompatActivity(), RecyclerViewAdapter.OnUserClickListene
 
         binding.buttonUpdate.setOnClickListener {
             if (userSelect != -1){
-                val fragmentUpdate = UpdateFragment(users[userSelect])
+                val fragmentUpdate = UpdateFragment(users[userSelect],userSelect)
                 fragmentUpdate.isCancelable = false
                 fragmentUpdate.show(supportFragmentManager,"FragmentUpdate")
             }else{
@@ -78,7 +93,7 @@ class MainActivity : AppCompatActivity(), RecyclerViewAdapter.OnUserClickListene
             if (userSelect != -1){
                 val fragmentDelete = DeleteFragment(users[userSelect])
                 fragmentDelete.isCancelable = false
-                fragmentDelete.show(supportFragmentManager,"FragementDelete")
+                fragmentDelete.show(supportFragmentManager,"FragmentDelete")
             }else{
                 msgNotUserSelect()
             }
@@ -104,20 +119,16 @@ class MainActivity : AppCompatActivity(), RecyclerViewAdapter.OnUserClickListene
         userSelect = position
     }
 
-    override fun onDialogUpdate(dialog: UpdateFragment, user: User) {
-        viewModel.updateUser(user)
-        users.remove(users[userSelect])
-        users.add(userSelect,user)
-        adapter.notifyDataSetChanged()
-        userSelect = -1
+    override fun onDialogUpdate(dialog: UpdateFragment, user: User, userSelect: Int) {
+        viewModel.updateUser(user,userSelect)
         dialog.dismiss()
     }
 
     override fun onDialogDeletedClick(dialog: DialogFragment, user: User) {
-        viewModel.deleteUser(users[userSelect])
-        users.remove(users[userSelect])
-        adapter.notifyDataSetChanged()
-        userSelect =  -1
+        viewModel.deleteUser(user)
+        //users.remove(user)
+        //userSelect =  -1
+        //adapter.notifyDataSetChanged()
         dialog.dismiss()
     }
 

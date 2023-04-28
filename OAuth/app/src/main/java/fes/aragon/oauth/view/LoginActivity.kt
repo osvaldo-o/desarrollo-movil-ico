@@ -3,6 +3,8 @@ package fes.aragon.oauth.view
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -56,7 +58,9 @@ class LoginActivity : AppCompatActivity() {
 
         // Create User with Email and Password
         binding.updateUser.setOnClickListener {
-            if (!binding.username.text.toString().isEmpty() && !binding.password.text.toString()
+            if (!isOnline()){
+                alert("No hay conexión a internet")
+            }else if (!binding.username.text.toString().isEmpty() && !binding.password.text.toString()
                     .isEmpty()
             ) {
                 FirebaseAuth.getInstance().createUserWithEmailAndPassword(
@@ -67,18 +71,20 @@ class LoginActivity : AppCompatActivity() {
                         try {
                             options(it.result?.user?.email ?: "", TipoProvedor.CORREO)
                         } catch (e: Exception) {
-                            alert()
+                            alert("El correo o constraseña no son validos")
                         }
-                    } else {
-                        alert()
                     }
                 }
+            } else {
+                alert("Hay campos vacios")
             }
         }
 
         // Sign in with Email and Password
         binding.loginbtn.setOnClickListener {
-            if (!binding.username.text.toString().isEmpty() && !binding.password.text.toString()
+            if (!isOnline()){
+                alert("No hay conexión a internet")
+            }else if (!binding.username.text.toString().isEmpty() && !binding.password.text.toString()
                     .isEmpty()
             ) {
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(
@@ -88,21 +94,27 @@ class LoginActivity : AppCompatActivity() {
                     if (it.isSuccessful) {
                         options(it.result?.user?.email ?: "", TipoProvedor.CORREO)
                     } else {
-                        alert()
+                        alert("El correo o constraseña no son validos")
                     }
                 }
+            } else {
+                alert("Hay campos vacios")
             }
         }
 
         // Sign in Google
         initActivity()
         binding.google.setOnClickListener {
-            val conf = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("234334445229-ch9857g6cnt0a2n4s1o3hul1hp4m2o0d.apps.googleusercontent.com")
-                .requestEmail().build()
-            val clientGoogle = GoogleSignIn.getClient(this, conf)
-            clientGoogle.signOut()
-            activityResultLauncher.launch(clientGoogle.signInIntent)
+            if (isOnline()){
+                val conf = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestIdToken("234334445229-ch9857g6cnt0a2n4s1o3hul1hp4m2o0d.apps.googleusercontent.com")
+                    .requestEmail().build()
+                val clientGoogle = GoogleSignIn.getClient(this, conf)
+                clientGoogle.signOut()
+                activityResultLauncher.launch(clientGoogle.signInIntent)
+            }else{
+                alert("No hay conexión a internet")
+            }
         }
 
 
@@ -130,7 +142,7 @@ class LoginActivity : AppCompatActivity() {
                                 ).show()
                                 options(it.result?.user?.email ?: "", TipoProvedor.FACEBOOK)
                             } else {
-                                alert()
+                                alert("Se produjo un error, contacte al provesor")
                             }
                         }
                 }
@@ -148,10 +160,10 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
-    private fun alert() {
+    private fun alert(mesage : String) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Mensaje")
-        builder.setMessage("Se produjo un error, contacte al provesor")
+        builder.setMessage(mesage)
         builder.setPositiveButton("Aceptar", null)
         val dialog: AlertDialog = builder.create()
         dialog.show()
@@ -190,16 +202,21 @@ class LoginActivity : AppCompatActivity() {
                                     if (it.isSuccessful) {
                                         options(account.email ?: "", TipoProvedor.GOOGLE)
                                     } else {
-                                        alert()
+                                        alert("Se produjo un error, contacte al provesor")
                                     }
                                 }
                         }
                     } catch (e: ApiException) {
-                        Toast.makeText(this, "Sign in failed: " + e.statusCode, Toast.LENGTH_SHORT)
-                            .show()
+                        Toast.makeText(this, "Sign in failed: " + e.statusCode, Toast.LENGTH_SHORT).show()
                     }
                 }
             }
+    }
+
+    private fun isOnline(): Boolean {
+        val connMgr = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo: NetworkInfo? = connMgr.activeNetworkInfo
+        return networkInfo?.isConnected == true
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
