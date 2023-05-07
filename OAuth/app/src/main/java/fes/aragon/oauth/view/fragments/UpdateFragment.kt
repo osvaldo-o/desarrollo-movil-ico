@@ -8,13 +8,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import fes.aragon.oauth.databinding.FragmentUpdateBinding
 import fes.aragon.oauth.model.User
+import fes.aragon.oauth.model.local.UserEntity
+import fes.aragon.oauth.model.local.toUser
 
-class UpdateFragment(private val user: User, private val userSelect: Int) : DialogFragment() {
+class UpdateFragment(private val user: UserEntity) : DialogFragment() {
 
-    internal lateinit var listener: NoticeDialogListener
+    private lateinit var listener: NoticeDialogListener
 
     interface NoticeDialogListener {
-        fun onDialogUpdate(dialog: UpdateFragment, user: User, userSelect: Int)
+        fun onDialogUpdate(dialog: UpdateFragment, user: UserEntity)
     }
 
     lateinit var binding: FragmentUpdateBinding
@@ -28,7 +30,7 @@ class UpdateFragment(private val user: User, private val userSelect: Int) : Dial
         binding.EditTextLast.setText(user.last)
         binding.EditTextEmail.setText(user.email)
         binding.buttonUpdate.setOnClickListener {
-            listener.onDialogUpdate(this,User(user.id,binding.EditTextName.text.toString(),binding.EditTextLast.text.toString(),binding.EditTextEmail.text.toString(),user.image),userSelect)
+            listener.onDialogUpdate(this,UserEntity(user.id,binding.EditTextName.text.toString(),binding.EditTextLast.text.toString(),binding.EditTextEmail.text.toString(),user.image))
         }
         binding.buttonCancel.setOnClickListener {
             dismiss()

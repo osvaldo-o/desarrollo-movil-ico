@@ -7,13 +7,14 @@ import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import fes.aragon.oauth.model.User
+import fes.aragon.oauth.model.local.UserEntity
 
-class DeleteFragment(private val user: User) : DialogFragment() {
+class DeleteFragment(private val user: UserEntity) : DialogFragment() {
 
-    internal lateinit var listener: NoticeDialogListener
+    private lateinit var listener: NoticeDialogListener
 
     interface NoticeDialogListener {
-        fun onDialogDeletedClick(dialog: DialogFragment, user: User)
+        fun onDialogDeletedClick(dialog: DialogFragment, user: UserEntity)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

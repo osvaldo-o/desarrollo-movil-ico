@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.RecyclerView
 import com.facebook.AccessToken
 import com.facebook.GraphRequest
 import com.facebook.GraphResponse
@@ -17,14 +18,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import fes.aragon.oauth.view.adapters.RecyclerViewAdapter
-import fes.aragon.oauth.model.User
 import fes.aragon.oauth.view.fragments.DeleteFragment
 import fes.aragon.oauth.view.fragments.UpdateFragment
 import fes.aragon.oauth.viewmodel.ViewModel
 import fes.aragon.oauth.R
 import fes.aragon.oauth.TipoProvedor
 import fes.aragon.oauth.databinding.ActivityMainBinding
-import kotlinx.coroutines.delay
+import fes.aragon.oauth.model.local.UserEntity
 import org.json.JSONObject
 
 enum class TipoProvedor {
@@ -37,73 +37,52 @@ class MainActivity : AppCompatActivity(), RecyclerViewAdapter.OnUserClickListene
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: RecyclerViewAdapter
+    private lateinit var recyclerView: RecyclerView
     private lateinit var googleSignInOption: GoogleSignInOptions
     private lateinit var googleSignInClient: GoogleSignInClient
-    private val users = ArrayList<User>()
-    private var userSelect: Int = -1
     private val viewModel: ViewModel by viewModels()
+    private var userSelect: UserEntity? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        options()
-        initRecyclerView()
+        options() // Login
 
+        viewModel.getAllUser()
         viewModel.users.observe(this) {
-            users.clear()
-            users.addAll(it)
-            binding.buttonAdd.isClickable = true
-            adapter.notifyDataSetChanged()
-        }
-
-        viewModel.userUpdate.observe(this) {
-            users.remove(users[it.first])
-            users.add(it.first,it.second)
-            adapter.notifyDataSetChanged()
-            userSelect = -1
-        }
-
-        viewModel.userDelete.observe(this) {
-            users.remove(it)
-            adapter.notifyDataSetChanged()
-            userSelect =  -1
+            adapter = RecyclerViewAdapter(it,this)
+            recyclerView = binding.recyclerView
+            recyclerView.adapter = adapter
         }
 
         binding.buttonAdd.setOnClickListener {
             if (isOnline()){
-                binding.buttonAdd.isClickable = false
-                viewModel.getUser()
+                viewModel.addUser()
             }else{
                 msgErrorInternet()
             }
         }
 
         binding.buttonUpdate.setOnClickListener {
-            if (userSelect != -1){
-                val fragmentUpdate = UpdateFragment(users[userSelect],userSelect)
+            if (userSelect != null){
+                val fragmentUpdate = UpdateFragment(this.userSelect!!)
                 fragmentUpdate.isCancelable = false
-                fragmentUpdate.show(supportFragmentManager,"FragmentUpdate")
+                fragmentUpdate.show(supportFragmentManager,"fragmentUpdate")
             }else{
                 msgNotUserSelect()
             }
         }
 
         binding.buttonDelete.setOnClickListener {
-            if (userSelect != -1){
-                val fragmentDelete = DeleteFragment(users[userSelect])
+            if (userSelect != null){
+                val fragmentDelete = DeleteFragment(this.userSelect!!)
                 fragmentDelete.isCancelable = false
-                fragmentDelete.show(supportFragmentManager,"FragmentDelete")
+                fragmentDelete.show(supportFragmentManager,"fragmentDelete")
             }else{
                 msgNotUserSelect()
             }
         }
-    }
-
-    private fun initRecyclerView(){
-        viewModel.getAllUser()
-        adapter = RecyclerViewAdapter(users,this)
-        binding.recyclerView.adapter = adapter
     }
 
     private fun isOnline(): Boolean {
@@ -112,24 +91,21 @@ class MainActivity : AppCompatActivity(), RecyclerViewAdapter.OnUserClickListene
         return networkInfo?.isConnected == true
     }
 
-    private fun msgErrorInternet() = Toast.makeText(this,R.string.msg_error,Toast.LENGTH_SHORT).show()
-    private fun msgNotUserSelect() = Toast.makeText(this,R.string.msg_not_select,Toast.LENGTH_SHORT).show()
 
-    override fun onUserClick(position: Int) {
-        userSelect = position
-    }
-
-    override fun onDialogUpdate(dialog: UpdateFragment, user: User, userSelect: Int) {
-        viewModel.updateUser(user,userSelect)
-        dialog.dismiss()
-    }
-
-    override fun onDialogDeletedClick(dialog: DialogFragment, user: User) {
+    override fun onDialogDeletedClick(dialog: DialogFragment, user: UserEntity) {
         viewModel.deleteUser(user)
-        //users.remove(user)
-        //userSelect =  -1
-        //adapter.notifyDataSetChanged()
+        userSelect = null
         dialog.dismiss()
+    }
+
+    override fun onDialogUpdate(dialog: UpdateFragment, user: UserEntity) {
+        viewModel.updateUser(user)
+        userSelect = null
+        dialog.dismiss()
+    }
+
+    override fun onUserClick(userEntity: UserEntity) {
+        userSelect = userEntity
     }
 
     private fun options(){
@@ -144,7 +120,6 @@ class MainActivity : AppCompatActivity(), RecyclerViewAdapter.OnUserClickListene
         preferences.putString("provedor", provedor)
         preferences.apply()
     }
-
     private fun init(email: String, provedor: String) {
 
         binding.closeSesion.setOnClickListener {
@@ -183,4 +158,7 @@ class MainActivity : AppCompatActivity(), RecyclerViewAdapter.OnUserClickListene
             }
         }
     }
+    private fun msgErrorInternet() = Toast.makeText(this,R.string.msg_error,Toast.LENGTH_SHORT).show()
+    private fun msgNotUserSelect() = Toast.makeText(this,R.string.msg_not_select,Toast.LENGTH_SHORT).show()
+
 }
